@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orbit Simulation</title>
+    <style>
+        canvas { background-color: #000; }
+    </style>
+</head>
+<body>
+    <canvas id="orbitCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('orbitCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const blobRadius = 20; // Radius of the dark matter blob
+
+        let eccentricity = 1; // Start with a straight line (eccentricity = 1)
+
+        // Function to draw the dark matter blob
+        function drawBlob() {
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, blobRadius, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        // Function to update and draw the orbit
+        function drawOrbit() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBlob();
+
+            let a = 200; // Semi-major axis length
+            let b = a * Math.sqrt(1 - eccentricity * eccentricity); // Semi-minor axis
+
+            // Calculate focal point distance from center
+            let focalLength = Math.sqrt(a*a - b*b);
+
+            // Draw ellipse
+            ctx.strokeStyle = 'red';
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, a, b, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw asteroid (simple representation)
+            let angle = performance.now() / 1000;
+            let x = centerX + a * Math.cos(angle);
+            let y = centerY + b * Math.sin(angle);
+            ctx.fillStyle = 'green';
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Gradually change the eccentricity
+            eccentricity -= 0.001;
+            if (eccentricity < 0) eccentricity = 0;
+
+            requestAnimationFrame(drawOrbit);
+        }
+
+        drawOrbit();
+    </script>
+</body>
+</html>

@@ -7,7 +7,7 @@ distance_miles = np.float64(10e9)  # Distance in miles
 distance = distance_miles * np.float64(1609.34)  # Convert distance to meters
 
 # Time step for each iteration (in seconds)
-time_step = np.float64(1000)  # Adjust this as needed for accuracy
+time_step = np.float64(500)  # Adjust this as needed for accuracy
 
 # Initialize variables
 position = np.float64(distance)  # Initial position
