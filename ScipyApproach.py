@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.integrate import quad
 
 # Constants
 G = 6.67430e-11  # Gravitational constant in m^3/kg/s^2
@@ -12,12 +13,9 @@ def integrand(r):
 
 # Integrating from a small value close to 0 (to avoid division by zero) to the initial distance
 epsilon = 1.0  # Small value to avoid division by zero at the lower limit of integration
-r = np.linspace(epsilon, distance, 100000)  # Array of distances
-dr = np.diff(r)  # Differential elements of r
-integral_values = integrand(r[:-1])  # Integrand values at each r
 
-# Numerical integration using the trapezoidal rule
-time_seconds = np.sum(integral_values * dr)
+# Numerical integration using SciPy's quad function for more accuracy
+time_seconds, _ = quad(integrand, epsilon, distance)
 
 # Convert time to days
 time_days = time_seconds / (60 * 60 * 24)
