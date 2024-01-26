@@ -7,7 +7,7 @@
     </style>
 </head>
 <body>
-    <canvas id="orbitCanvas" width="800" height="600"></canvas>
+    <canvas id="orbitCanvas" width="1200" height="900"></canvas>
     <script>
         const canvas = document.getElementById('orbitCanvas');
         const ctx = canvas.getContext('2d');
@@ -44,7 +44,7 @@
             ctx.stroke();
 
             // Calculate position of the asteroid
-            let meanAnomaly = (performance.now() / 10000) % (2 * Math.PI); // Simplified mean anomaly over time
+            let meanAnomaly = (performance.now() / 300) % (2 * Math.PI); // Simplified mean anomaly over time
             let trueAnomaly = meanAnomaly; // Simplified, true anomaly is approximated as mean anomaly
 
             let x = focalX + semiMajorAxis * Math.cos(trueAnomaly);
@@ -57,7 +57,7 @@
             ctx.fill();
 
             // Gradually change the eccentricity
-            eccentricity -= 0.0005;
+            eccentricity -= 0.000001;
             if (eccentricity < 0.1) eccentricity = 0.1; // Limit to prevent circular orbit
 
             requestAnimationFrame(drawOrbit);
